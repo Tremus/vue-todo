@@ -4,16 +4,28 @@
         <h1>{{ msg }}</h1>
         <h2>Tasks</h2>
         <div class="task-list-container">
-            <ol>
-                <task-item v-for="task in tasks" v-bind:task="task" v-bind:key="task.id"></task-item>
-            </ol>
+            <ul>
+                <Task
+                    v-for="task in tasks"
+                    v-bind:key="task.id"
+                    v-bind:id="task.id"
+                    v-bind:name="task.name"
+                    v-bind:description="task.description"
+                    v-bind:completed="task.completed"
+                    v-bind:createdAt="task.createdAt"
+                    v-bind:updatedAt="task.updatedAt"
+                ></Task>
+            </ul>
         </div>
     </div>
 </template>
 
 <script>
+import Task from './Task';
+
 export default {
     name: 'app',
+    components: { Task },
     data() {
         return {
             msg: 'Welcome to Your Vue.js App',
