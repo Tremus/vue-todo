@@ -28,43 +28,49 @@ const handle = async (req, res) => {
             res.json({ message: 'pong' });
             break;
 
-        case /^\/api\/tasks$/.test(req.url) && req.method === 'GET':
+        case /^\/api\/tasks$/.test(req.url) && req.method === 'GET': {
             const tasks = await db.Task.findAll();
             res.json({ tasks });
             break;
+        }
 
         case /^\/api\/tasks$/.test(req.url) && req.method === 'POST':
             if (req.body) {
                 const task = await db.Task.create(req.body);
                 res.json({ task });
             }
-            res.writeHead(400);
-            res.end();
             break;
 
-        case /^\/api\/tasks\/[0-9]+$/.test(req.url) && req.method === 'PATCH':
-            var taskId = /^\/api\/tasks\/([0-9]+)$/.exec(req.url)[1];
+        case /^\/api\/tasks\/[0-9]+$/.test(req.url) && req.method === 'GET': {
+            const taskId = /^\/api\/tasks\/([0-9]+)$/.exec(req.url)[1];
+            const task = await db.Task.findByPk(taskId);
+            res.json({ task });
+        }
+
+        case /^\/api\/tasks\/[0-9]+$/.test(req.url) && req.method === 'PATCH': {
+            const taskId = /^\/api\/tasks\/([0-9]+)$/.exec(req.url)[1];
             if (req.body) {
                 const task = await db.Task.findByPk(taskId);
                 const newtask = await task.update(req.body);
                 res.json({ task: newtask });
             }
-            res.writeHead(400);
-            res.end();
             break;
+        }
 
-        case /^\/api\/tasks\/[0-9]+$/.test(req.url) && req.method === 'DELETE':
-            var taskId = /^\/api\/tasks\/([0-9]+)$/.exec(req.url)[1];
+        case /^\/api\/tasks\/[0-9]+$/.test(req.url) && req.method === 'DELETE': {
+            const taskId = /^\/api\/tasks\/([0-9]+)$/.exec(req.url)[1];
             const task = await db.Task.findByPk(taskId);
             await task.destroy();
             res.writeHead(200);
             res.end();
-            break;
+        }
 
         default:
             res.writeHead(404);
             res.end();
     }
+    res.writeHead(400);
+    res.end();
 };
 
 http.createServer(async (req, res) => {
