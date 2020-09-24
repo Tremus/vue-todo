@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Modal v-if="modal" v-bind:close="toggleModal">
-            <p slot="content">hello</p>
+            <Form slot="content" v-bind:postTask="postTask"></Form>
         </Modal>
         <img src="./assets/logo.png" />
         <h1>{{ msg }}</h1>
@@ -28,10 +28,11 @@
 <script>
 import Task from './Task';
 import Modal from './Modal';
+import Form from './Form';
 
 export default {
     name: 'app',
-    components: { Task, Modal },
+    components: { Task, Modal, Form },
     data() {
         return {
             msg: 'Welcome to Your Vue.js App',
@@ -66,6 +67,21 @@ export default {
                     });
             };
         },
+        postTask(name, description) {
+            const body = { name, description };
+            fetch('http://localhost:8080/api/tasks', {
+                method: 'POST',
+                headers: {
+                    ['Content-Type']: 'application/json',
+                },
+                body: JSON.stringify(body),
+            })
+                .then(res => res.json())
+                .then(data => {
+                    this.tasks.push(data.task);
+                    this.modal = false;
+                });
+        },
         toggleModal() {
             this.modal = !this.modal;
         },
@@ -91,5 +107,15 @@ li {
 }
 button {
     cursor: pointer;
+}
+input,
+textarea {
+    border: 0;
+    padding: 0;
+    font-family: inherit;
+}
+input:focus,
+textarea:focus {
+    outline: none;
 }
 </style>
