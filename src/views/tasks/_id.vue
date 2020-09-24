@@ -1,7 +1,7 @@
 <template>
     <div class="page">
         <nav id="nav">
-            <img class="nav-logo" src="../../assets/logo.png" height="40" />
+            <img class="nav-logo" src="/assets/logo.png" height="40" />
             <button class="back-button" @click="goBack">Back to task list</button>
         </nav>
         <Modal v-if="modal" v-bind:close="toggleModal">
@@ -24,7 +24,7 @@
 
 <script>
 import debounce from 'lodash/debounce';
-import Modal from '../../Modal';
+import Modal from '../../components/Modal';
 
 export default {
     components: { Modal },
@@ -58,7 +58,7 @@ export default {
             window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
         },
         getTask() {
-            fetch(`http://localhost:8080/api/tasks/${this.$route.params.id}`)
+            fetch(`http://localhost:3000/api/tasks/${this.$route.params.id}`)
                 .then(res => res.json())
                 .then(data => {
                     this.task = data.task;
@@ -67,7 +67,7 @@ export default {
                 });
         },
         deleteTask() {
-            fetch(`http://localhost:8080/api/tasks/${this.$route.params.id}`, {
+            fetch(`http://localhost:3000/api/tasks/${this.$route.params.id}`, {
                 method: 'DELETE',
             }).then(res => {
                 if (res.ok) {
@@ -80,7 +80,7 @@ export default {
         throttledMethod: debounce(function() {
             const { name, description } = this.task;
             const body = { name, description };
-            fetch(`http://localhost:8080/api/tasks/${this.$route.params.id}`, {
+            fetch(`http://localhost:3000/api/tasks/${this.$route.params.id}`, {
                 method: 'PATCH',
                 headers: { ['Content-Type']: 'application/json' },
                 body: JSON.stringify(body),

@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <img src="../../assets/logo.png" />
+        <img src="/assets/logo.png" />
         <h1>Tasks</h1>
         <div class="task-list-container">
             <div style="text-align: right;">
@@ -29,9 +29,9 @@
 </template>
 
 <script>
-import Modal from '../../Modal';
-import Task from './Task';
-import Form from './Form';
+import Modal from '../components/Modal';
+import Task from '../components/Task';
+import Form from '../components/Form';
 
 export default {
     name: 'Home',
@@ -55,7 +55,7 @@ export default {
     },
     methods: {
         getTasks() {
-            fetch('http://localhost:8080/api/tasks')
+            fetch('http://localhost:3000/api/tasks')
                 .then(res => res.json())
                 .then(data => {
                     this.tasks = data.tasks;
@@ -64,7 +64,7 @@ export default {
         patchTask(task) {
             return () => {
                 const body = { completed: !task.completed };
-                fetch(`http://localhost:8080/api/tasks/${task.id}`, {
+                fetch(`http://localhost:3000/api/tasks/${task.id}`, {
                     method: 'PATCH',
                     headers: {
                         ['Content-Type']: 'application/json',
@@ -79,7 +79,7 @@ export default {
         },
         postTask(name, description) {
             const body = { name, description };
-            fetch('http://localhost:8080/api/tasks', {
+            fetch('http://localhost:3000/api/tasks', {
                 method: 'POST',
                 headers: {
                     ['Content-Type']: 'application/json',
