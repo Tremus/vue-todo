@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <img src="/assets/logo.png" />
+        <img src="../assets/logo.png" />
         <h1>Tasks</h1>
         <div class="task-list-container">
             <div style="text-align: right;">
@@ -36,12 +36,11 @@ import Form from '../components/Form';
 export default {
     name: 'Home',
     components: { Task, Modal, Form },
-    head: {
-        title: {
-            inner: 'TODOs',
-            complement: 'List',
-        },
-        link: [{ rel: 'icon', href: `/dist/logo.png?t=${Date.now()}`, type: 'image/png' }],
+    head() {
+        return {
+            title: 'TODO List',
+            link: [{ rel: 'icon', href: require('../assets/logo.png'), type: 'image/png' }],
+        };
     },
     data() {
         return {

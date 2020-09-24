@@ -1,7 +1,7 @@
 <template>
     <div class="page">
         <nav id="nav">
-            <img class="nav-logo" src="/assets/logo.png" height="40" />
+            <img class="nav-logo" src="../../assets/logo.png" height="40" />
             <button class="back-button" @click="goBack">Back to task list</button>
         </nav>
         <Modal v-if="modal" v-bind:close="toggleModal">
@@ -28,20 +28,15 @@ import Modal from '../../components/Modal';
 
 export default {
     components: { Modal },
-    head: {
-        title() {
-            if (this.task) {
-                return {
-                    inner: 'TODOs',
-                    complement: this.task.name,
-                };
-            }
-            return {
-                inner: 'TODOs',
-                separator: ' ',
-            };
-        },
-        link: [{ rel: 'icon', href: `/dist/logo.png?t=${Date.now()}`, type: 'image/png' }],
+    head() {
+        let title = 'TODO';
+        if (this.task) {
+            title += ' | ' + this.task.name;
+        }
+        return {
+            title: title,
+            link: [{ rel: 'icon', href: require('../../assets/logo.png'), type: 'image/png' }],
+        };
     },
     data() {
         return {
