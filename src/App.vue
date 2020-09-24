@@ -42,6 +42,10 @@ li {
 button {
     cursor: pointer;
 }
+a {
+    color: inherit;
+    text-decoration: none;
+}
 input,
 textarea {
     border: 0;
