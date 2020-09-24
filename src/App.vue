@@ -1,5 +1,8 @@
 <template>
     <div id="app">
+        <Modal v-if="modal" v-bind:close="toggleModal">
+            <p slot="content">hello</p>
+        </Modal>
         <img src="./assets/logo.png" />
         <h1>{{ msg }}</h1>
         <h2>Tasks</h2>
@@ -17,20 +20,23 @@
                     v-bind:patchTask="patchTask(task)"
                 ></Task>
             </ul>
+            <button @click="toggleModal()">New Task</button>
         </div>
     </div>
 </template>
 
 <script>
 import Task from './Task';
+import Modal from './Modal';
 
 export default {
     name: 'app',
-    components: { Task },
+    components: { Task, Modal },
     data() {
         return {
             msg: 'Welcome to Your Vue.js App',
             tasks: [],
+            modal: false,
         };
     },
     mounted() {
@@ -60,6 +66,9 @@ export default {
                     });
             };
         },
+        toggleModal() {
+            this.modal = !this.modal;
+        },
     },
 };
 </script>
@@ -79,5 +88,8 @@ export default {
 }
 li {
     list-style: none;
+}
+button {
+    cursor: pointer;
 }
 </style>
