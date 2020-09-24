@@ -46,9 +46,8 @@ const handle = async (req, res) => {
             var taskId = /^\/api\/tasks\/([0-9]+)$/.exec(req.url)[1];
             if (req.body) {
                 const task = await db.Task.findByPk(taskId);
-                await task.update(req.body);
-                res.writeHead(200);
-                res.end();
+                const newtask = await task.update(req.body);
+                res.json({ task: newtask });
             }
             res.writeHead(400);
             res.end();

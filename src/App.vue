@@ -14,6 +14,7 @@
                     v-bind:completed="task.completed"
                     v-bind:createdAt="task.createdAt"
                     v-bind:updatedAt="task.updatedAt"
+                    v-bind:patchTask="patchTask(task)"
                 ></Task>
             </ul>
         </div>
@@ -33,11 +34,32 @@ export default {
         };
     },
     mounted() {
-        fetch('http://localhost:8080/api/tasks')
-            .then(res => res.json())
-            .then(data => {
-                this.tasks = data.tasks;
-            });
+        this.getTasks();
+    },
+    methods: {
+        getTasks() {
+            fetch('http://localhost:8080/api/tasks')
+                .then(res => res.json())
+                .then(data => {
+                    this.tasks = data.tasks;
+                });
+        },
+        patchTask(task) {
+            return () => {
+                const body = { completed: !task.completed };
+                fetch(`http://localhost:8080/api/tasks/${task.id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        ['Content-Type']: 'application/json',
+                    },
+                    body: JSON.stringify(body),
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        task.completed = data.task.completed;
+                    });
+            };
+        },
     },
 };
 </script>
@@ -54,5 +76,8 @@ export default {
 .task-list-container {
     max-width: 400px;
     margin: auto;
+}
+li {
+    list-style: none;
 }
 </style>
