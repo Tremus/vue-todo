@@ -12,7 +12,7 @@ module.exports = {
                 type: Sequelize.DataTypes.TEXT,
                 allowNull: false,
             },
-            descripton: {
+            description: {
                 type: Sequelize.DataTypes.TEXT,
                 allowNull: true,
             },
