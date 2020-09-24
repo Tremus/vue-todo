@@ -7,7 +7,7 @@
             <router-link class="task-name" v-bind="{ to: `/tasks/${id}` }">
                 {{ name }}
             </router-link>
-            <p v-if="description">{{ description }}</p>
+            <p v-if="description" class="task-description">{{ description }}</p>
         </div>
     </li>
 </template>
@@ -23,12 +23,16 @@ export default {
 .task {
     display: flex;
     text-align: left;
+    margin-bottom: 1em;
 }
 .task-name {
     margin-top: 0;
     display: inline-block;
     font-weight: 700;
     font-size: 18px;
+}
+.task-description {
+    white-space: pre-wrap;
 }
 .task-completed-container {
     padding-right: 1em;

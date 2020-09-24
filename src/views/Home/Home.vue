@@ -115,6 +115,7 @@ export default {
 .task-list-container {
     max-width: 400px;
     margin: auto;
+    margin-bottom: 6em;
 }
 .task-list {
     margin-top: 2em;
