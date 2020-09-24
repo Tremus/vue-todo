@@ -1,25 +1,26 @@
-<script>
-import Home from './views/Home/Home';
+<template>
+    <div id="app">
+        <router-view></router-view>
+    </div>
+</template>
 
-const routes = {
-    '/': Home,
-};
+<script>
+import VueRouter from 'vue-router';
+
+import Home from './views/Home/Home';
+import Task from './views/Tasks/Task';
+
+const router = new VueRouter({
+    mode: 'history',
+    routes: [
+        { path: '/', component: Home },
+        { path: '/tasks/:id', component: Task },
+    ],
+});
 
 export default {
     name: 'app',
-    data() {
-        return {
-            currentRoute: window.location.pathname,
-        };
-    },
-    computed: {
-        ViewComponent() {
-            return routes[this.currentRoute];
-        },
-    },
-    render(h) {
-        return h(this.ViewComponent);
-    },
+    router,
 };
 </script>
 
@@ -30,7 +31,9 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
+}
+body {
+    margin: 0;
 }
 li {
     list-style: none;
@@ -45,7 +48,8 @@ textarea {
     font-family: inherit;
 }
 input:focus,
-textarea:focus {
+textarea:focus,
+button:focus {
     outline: none;
 }
 </style>

@@ -4,7 +4,9 @@
             <input type="checkbox" id="checkbox" v-bind:value="completed" v-on:click="patchTask()" />
         </div>
         <div v-bind:class="{ complete: completed }">
-            <h4 class="task-name">{{ name }}</h4>
+            <router-link v-bind="{ to: `/tasks/${id}` }">
+                <h4 class="task-name">{{ name }}</h4>
+            </router-link>
             <p v-if="description">{{ description }}</p>
         </div>
     </li>

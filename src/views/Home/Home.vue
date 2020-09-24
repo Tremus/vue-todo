@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div>
         <Modal v-if="modal" v-bind:close="toggleModal">
             <Form slot="content" v-bind:postTask="postTask"></Form>
         </Modal>
