@@ -39,12 +39,17 @@ body {
 li {
     list-style: none;
 }
-button {
+button,
+input[type='checkbox'],
+label {
     cursor: pointer;
 }
 a {
     color: inherit;
     text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
 }
 input,
 textarea {

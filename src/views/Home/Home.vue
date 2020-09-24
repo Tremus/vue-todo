@@ -6,9 +6,13 @@
         <img src="../../assets/logo.png" />
         <h1>Tasks</h1>
         <div class="task-list-container">
-            <ul>
+            <div style="text-align: right;">
+                <input type="checkbox" id="hideCompleted" v-model="hideCompleted" />
+                <label for="hideCompleted">Hide completed</label>
+            </div>
+            <ul class="task-list">
                 <Task
-                    v-for="task in tasks"
+                    v-for="task in activeTasks"
                     v-bind:key="task.id"
                     v-bind:id="task.id"
                     v-bind:name="task.name"
@@ -36,6 +40,7 @@ export default {
         return {
             tasks: [],
             modal: false,
+            hideCompleted: false,
         };
     },
     mounted() {
@@ -83,6 +88,18 @@ export default {
         toggleModal() {
             this.modal = !this.modal;
         },
+        toggleHideCompleted() {
+            this.hideCompleted = !this.hideCompleted;
+        },
+    },
+    computed: {
+        activeTasks() {
+            if (!this.hideCompleted) {
+                return this.tasks;
+            } else {
+                return this.tasks.filter(t => !t.completed);
+            }
+        },
     },
 };
 </script>
@@ -91,5 +108,8 @@ export default {
 .task-list-container {
     max-width: 400px;
     margin: auto;
+}
+.task-list {
+    margin-top: 2em;
 }
 </style>
