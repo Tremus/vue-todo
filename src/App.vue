@@ -54,6 +54,9 @@ a {
 a:hover {
     text-decoration: underline;
 }
+textarea {
+    resize: none;
+}
 input,
 textarea {
     border: 0;

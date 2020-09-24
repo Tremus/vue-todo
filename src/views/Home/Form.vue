@@ -34,7 +34,6 @@ export default {
     font-weight: 500;
 }
 .form-description {
-    resize: none;
     width: 100%;
     margin-bottom: 1em;
 }

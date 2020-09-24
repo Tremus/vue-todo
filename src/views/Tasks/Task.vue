@@ -11,13 +11,11 @@
                 <button @click="deleteTask">Yes</button>
             </div>
         </Modal>
-        <div>
-            <div v-if="loaded">
-                <h1>{{ task.name }}</h1>
-                <p>{{ task.description }}</p>
-            </div>
-            <div v-else>Loading...</div>
+        <div v-if="loaded" class="task-container">
+            <textarea class="task-name" type="text" v-model="task.name" @keyup="throttledMethod()" />
+            <textarea class="task-description" type="text" v-model="task.description" @keyup="throttledMethod()" />
         </div>
+        <div v-else>Loading...</div>
         <footer>
             <button class="delete-button" v-if="loaded" @click="toggleModal">DELETE</button>
         </footer>
@@ -25,6 +23,7 @@
 </template>
 
 <script>
+import debounce from 'lodash/debounce';
 import Modal from '../../Modal';
 
 export default {
@@ -62,6 +61,19 @@ export default {
                 }
             });
         },
+        throttledMethod: debounce(function() {
+            const { name, description } = this.task;
+            const body = { name, description };
+            fetch(`http://localhost:8080/api/tasks/${this.$route.params.id}`, {
+                method: 'PATCH',
+                headers: { ['Content-Type']: 'application/json' },
+                body: JSON.stringify(body),
+            }).then(res => {
+                if (!res.ok) {
+                    throw new Error(`Unhandled status code ${res.status}`);
+                }
+            });
+        }, 800),
         toggleModal() {
             this.modal = !this.modal;
         },
@@ -90,6 +102,23 @@ footer {
     padding-left: 1em;
     padding-right: 1em;
     box-sizing: border-box;
+}
+.task-container {
+    max-width: 1000px;
+    margin: auto;
+}
+.task-name {
+    width: 100%;
+    font-size: 2em;
+    font-weight: 500;
+    text-align: center;
+}
+.task-description {
+    width: 100%;
+    margin-top: 2em;
+    text-align: left;
+    font-size: 1em;
+    max-width: 600px;
 }
 .back-button {
     border: 0;
