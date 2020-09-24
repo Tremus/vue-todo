@@ -91,9 +91,6 @@ footer {
     padding-right: 1em;
     box-sizing: border-box;
 }
-.page {
-    height: inherit;
-}
 .back-button {
     border: 0;
     background: none;

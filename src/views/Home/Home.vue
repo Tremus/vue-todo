@@ -1,8 +1,5 @@
 <template>
-    <div>
-        <Modal v-if="modal" v-bind:close="toggleModal">
-            <Form slot="content" v-bind:postTask="postTask"></Form>
-        </Modal>
+    <div class="page">
         <img src="../../assets/logo.png" />
         <h1>Tasks</h1>
         <div class="task-list-container">
@@ -25,6 +22,9 @@
             </ul>
             <button @click="toggleModal()">New Task</button>
         </div>
+        <Modal v-if="modal" v-bind:close="toggleModal">
+            <Form slot="content" v-bind:postTask="postTask"></Form>
+        </Modal>
     </div>
 </template>
 
