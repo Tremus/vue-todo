@@ -17,6 +17,7 @@
         "sequelize-cli": "^6.2.0",
         "sqlite3": "^5.0.0",
         "vue": "^2.5.11",
+        "vue-head": "^2.2.0",
         "vue-router": "^3.4.3"
     },
     "browserslist": [

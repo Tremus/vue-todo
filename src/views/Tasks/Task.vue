@@ -28,6 +28,21 @@ import Modal from '../../Modal';
 
 export default {
     components: { Modal },
+    head: {
+        title() {
+            if (this.task) {
+                return {
+                    inner: 'TODOs',
+                    complement: this.task.name,
+                };
+            }
+            return {
+                inner: 'TODOs',
+                separator: ' ',
+            };
+        },
+        link: [{ rel: 'icon', href: `/dist/logo.png?t=${Date.now()}`, type: 'image/png' }],
+    },
     data() {
         return {
             loaded: false,
@@ -48,6 +63,7 @@ export default {
                 .then(data => {
                     this.task = data.task;
                     this.loaded = true;
+                    this.$emit('updateHead');
                 });
         },
         deleteTask() {

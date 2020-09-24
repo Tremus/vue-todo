@@ -36,6 +36,13 @@ import Form from './Form';
 export default {
     name: 'Home',
     components: { Task, Modal, Form },
+    head: {
+        title: {
+            inner: 'TODOs',
+            complement: 'List',
+        },
+        link: [{ rel: 'icon', href: `/dist/logo.png?t=${Date.now()}`, type: 'image/png' }],
+    },
     data() {
         return {
             tasks: [],
